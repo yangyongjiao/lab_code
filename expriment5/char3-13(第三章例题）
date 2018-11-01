@@ -1,0 +1,99 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<string>
+
+#include<iostream>
+
+#include<windows.h>
+
+using namespace std;
+
+class student//不能在构造函数上指定返回类型
+
+{
+
+
+	char *specialty;
+public:
+
+
+	student(const student &r);//拷贝构造函数申明；
+
+	student(const char *pSpec = 0);//构造函数申明；
+
+	
+
+	~student();
+
+	void show();
+
+
+
+};
+
+student::student(const student &r)//拷贝构造函数的定义；
+{
+	if (r.specialty)
+
+	{
+		specialty = new char[strlen(r.specialty) + 1];
+
+		strcpy(specialty, r.specialty);
+	}
+
+	else specialty = 0;
+}
+
+
+
+student::student(const char *pSpec)//构造函数的定义；
+
+{
+
+	if (pSpec)
+	{
+
+		specialty = new char[strlen(pSpec) + 1];
+
+		strcpy(specialty, pSpec);
+
+	}
+
+	else specialty = 0;
+
+}
+
+
+
+student ::~student()//析构函数的实现
+{
+
+	if (specialty)
+
+		delete[] specialty;//specialty 的存储空间由new运算符分配，需用delete释放
+}
+
+void student::show()
+{
+
+	cout << "specialty=" << specialty << '\n';
+
+}
+
+
+int main()
+
+{
+	student zhang("computer");//computer是一个const char*类型，是一个指向字符常亮的指针；
+
+	student wang(zhang);
+
+	zhang.show();
+
+	wang.show();
+
+	system("pause");
+
+	return 0;
+
+}
